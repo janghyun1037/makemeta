@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float moveSpeed;
     Rigidbody2D rb;
@@ -45,5 +45,17 @@ public class PlayerMove : MonoBehaviour
         Vector3 pos = transform.position;
         pos.x += h * moveSpeed * Time.deltaTime;
         transform.position = pos;
+    }
+
+    void sensing()//키감지 나중에 없애도 됨
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("Q스킬");
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("E스킬");
+        }
     }
 }
