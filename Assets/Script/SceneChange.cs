@@ -12,6 +12,9 @@ public class SceneChange : MonoBehaviour
             case "StartBtn":
                 SceneManager.LoadScene("InGame");
                 break;
+            case "SettingBtn":
+                Debug.Log("¼¼ÆÃ");
+                break;
         }
     }
 }
