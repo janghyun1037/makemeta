@@ -15,6 +15,17 @@ public class SceneChange : MonoBehaviour
             case "SettingBtn":
                 Debug.Log("¼¼ÆÃ");
                 break;
+            case "QuitBtn":
+                end();
+                break;
         }
+    }
+    void end()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
