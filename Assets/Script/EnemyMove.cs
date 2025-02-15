@@ -5,39 +5,51 @@ using UnityEngine;
 public class EnemyMove : MonoBehaviour
 {
 
-    Transform player;
-    private int rotateSpeed = 2;
-    private float moveSpeed = 5f;
-    private SpriteRenderer spriteRenderer;
+    Transform Player;
+    //private int rotateSpeed = 2;
+    private float Speed = 5f;
+    //public SpriteRenderer spriteRenderer;
+    private float stopDistance = 8f;
+    private Transform target;
     void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player").transform;
+        //Player = GameObject.FindGameObjectWithTag("Player").transform;
         //spriteRenderer = GetComponent<SpriteRenderer>();
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     void Update()
     {
-        Rotate();
-    }
-
-    private void Rotate()
-    {
-        Vector2 direction = new Vector2(transform.position.x - player.position.x, player.position.y);
-
-        Vector3 dir = direction;
-        transform.position += (-dir.normalized * moveSpeed * Time.deltaTime);
-    }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        if (Vector2.Distance(transform.position, target.position) < stopDistance)
         {
-            Find();
+            transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
         }
+        //Rotate();
+        //Find();
     }
+
+    //void Rotate()
+    //{
+    //    Vector2 direction = new Vector2(transform.position.x - Player.position.x, Player.position.y);
+
+    //    Vector3 dir = direction;
+    //    transform.position += (-dir.normalized * moveSpeed * Time.deltaTime);
+    //}
+    //void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        Find();
+    //    }
+    //}
     void Find()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //Player = GameObject.FindGameObjectWithTag("Player").transform;
+        //spriteRenderer = GetComponent<SpriteRenderer>();
+        if (Vector2.Distance(transform.position, Player.position) > stopDistance)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
+        }
     }
 }
