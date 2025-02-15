@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed;
     Rigidbody2D rb;
-    int jumpCount = 0;
+    public int HP;
+    public int jumpCount = 0;
     public float jumpPower;
+    public float moveSpeed;
 
     private void Start()
     {
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Jump")
         {
             jumpPower = 8;
+            jumpCount = 1;
         }
     }
 
@@ -60,15 +62,13 @@ public class Player : MonoBehaviour
         transform.position = pos;
     }
 
-    void sensing()//키감지 나중에 없애도 됨
+    void Ability()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("Q스킬");
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("E스킬");
-        }
+        
+    }
+
+    void NormalAttack()
+    {
+
     }
 }
