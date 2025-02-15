@@ -37,6 +37,10 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene("InGame");
         }
+        if (collision.gameObject.tag == "Jump")
+        {
+            jumpPower = 8;
+        }
     }
 
     void Jump()
