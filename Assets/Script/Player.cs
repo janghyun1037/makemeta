@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -27,6 +28,14 @@ public class Player : MonoBehaviour
         {
             if (jumpCount > 1) jumpCount = 1;
             jumpCount = 1;
+        }
+        if (collision.gameObject.tag == "Door")
+        {
+            SceneManager.LoadScene("Home");
+        }
+        if (collision.gameObject.tag == "DDR")
+        {
+            SceneManager.LoadScene("InGame");
         }
     }
 
