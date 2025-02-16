@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyData : MonoBehaviour
 {
     public static EnemyData instance;
+    public string deathEnemy;
 
     void Awake()
     {
@@ -27,9 +28,9 @@ public class EnemyData : MonoBehaviour
         public string enemyName;
         public int health;
         public int damage;
-        public int speed;
+        public float speed;
 
-        public EnemyStat(string enemyName, int health, int damage, int speed)
+        public EnemyStat(string enemyName, int health, int damage, float speed)
         {
             this.enemyName = enemyName;
             this.health = health;
@@ -48,4 +49,9 @@ public class EnemyData : MonoBehaviour
         new EnemyStat("현우", 30, 20, 10),
         new EnemyStat("주황", 100, 100, 20)
     };
+
+    public void SetDeathEnemy(string enemyName)
+    {
+        deathEnemy = enemyName;
+    }
 }

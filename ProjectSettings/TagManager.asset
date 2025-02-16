@@ -8,6 +8,7 @@ TagManager:
   - Door
   - DDR
   - Jump
+  - Enemy
   layers:
   - Default
   - TransparentFX

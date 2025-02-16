@@ -2,14 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
-    public int HP;
+
+    public int HP = 10;
     public int jumpCount = 0;
-    public float jumpPower;
-    public float moveSpeed;
+    public int jumpNum = 1;
+    public float jumpPower = 3;
+    public float moveSpeed = 1;
+    public int damage = 1;
+
+    public float curTime;
+    public float coolTime = 0.5f;
+
+    public Transform pos;
+    public Vector2 boxSize;
 
     private void Start()
     {
@@ -20,6 +30,8 @@ public class Player : MonoBehaviour
     {
         Jump();
         Move();
+        Ability();
+        NormalAttack();
     }
 
 
@@ -41,13 +53,17 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Jump")
         {
             jumpPower = 8;
-            jumpCount = 1;
+            jumpCount = jumpNum;
+        }
+        if(collision.gameObject.tag == "enemy")
+        {
+            HP--;
         }
     }
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount <= 1 && jumpCount > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount <= jumpNum && jumpCount > 0)
         {
             rb.AddForce(Vector3.up * jumpPower, ForceMode2D.Impulse);
             jumpCount--;
@@ -64,11 +80,51 @@ public class Player : MonoBehaviour
 
     void Ability()
     {
-        
+        if(string.IsNullOrEmpty(EnemyData.instance.deathEnemy))
+        {
+            return;
+        }
+
+        string lastEnemy = EnemyData.instance.deathEnemy;
+
+        EnemyData.EnemyStat? enemyStat = EnemyData.instance.enemyList.Find(e => e.enemyName == lastEnemy);
+
+        if (enemyStat.HasValue)
+        {
+            HP = enemyStat.Value.health;
+            moveSpeed = enemyStat.Value.speed;
+            damage = enemyStat.Value.damage;
+        }
     }
 
-    void NormalAttack()
+    public void NormalAttack()
     {
+        if (curTime <= 0)
+        {
+            if (Input.GetKey(KeyCode.C))
+            {
+                Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
 
+                foreach (Collider2D collider in collider2Ds)
+                {
+                    if (collider.tag == "Enemy")
+                    {
+                        collider.GetComponent<EnemyMove>().Damaged(damage);
+                    }
+                }
+                curTime = coolTime;
+
+            }
+        }
+        else
+        {
+            curTime -= Time.deltaTime;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(pos.position, boxSize);
     }
 }
