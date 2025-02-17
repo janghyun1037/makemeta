@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour
 {
@@ -95,6 +94,7 @@ public class Player : MonoBehaviour
             moveSpeed = enemyStat.Value.speed;
             damage = enemyStat.Value.damage;
         }
+
     }
 
     public void NormalAttack()
